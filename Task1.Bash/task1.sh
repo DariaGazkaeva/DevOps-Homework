@@ -34,6 +34,7 @@ function make_users_dirs {
     sudo chown  $user "$ROOT_DIR/$user"
     sudo chmod 755 "$ROOT_DIR/$user"
   done
+  echo "Directories are created"
 }
 
 create_log_file 2>&1 | tee --append $FILE
