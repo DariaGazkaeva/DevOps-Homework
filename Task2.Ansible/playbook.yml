@@ -1,0 +1,35 @@
+- name: Homework2
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Create user
+      user:
+        name: dasha
+        password: "{{ pwd | password_hash('sha512') }}"
+      vars:
+        pwd: "12345"
+
+    - name: Authorization
+      authorized_key:
+        user: dasha
+        key: "{{lookup('file', '~/.ssh/id_rsa.pub')}}"
+
+    - name: Disable Password Authentication
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "PasswordAuthentication yes"
+        line: "PasswordAuthentication no"
+
+    - name: Restart SSH
+      service:
+        name: sshd
+        state: restarted
+
+    - name: Create directory
+      file:
+        path: /opt/dashadir
+        state: directory
+        owner: dasha
+        mode: "0755"
