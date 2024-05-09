@@ -1,0 +1,7 @@
+---
+# vars file for user_init
+
+username: "dasha"
+pwd: "12345"
+key: "~/.ssh/id_rsa.pub"
+

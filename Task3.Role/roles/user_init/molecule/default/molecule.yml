@@ -1,0 +1,11 @@
+---
+driver:
+  name: default
+platforms:
+  - name: instance
+    image: ubuntu
+    pre_build_image: true
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

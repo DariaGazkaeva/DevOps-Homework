@@ -1,0 +1,6 @@
+- name: Homework3
+  hosts: all
+  become: yes
+
+  roles:
+    - user_init
