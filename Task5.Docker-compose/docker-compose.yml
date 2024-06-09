@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:1.27
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx_config:/etc/nginx/conf.d
+    networks:
+      - main_network
+  postgres:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      main_network:
+        aliases:
+          - new_db
+          - dev_db
+
+volumes:
+  postgres_data:
+
+networks:
+  main_network:
+    driver: bridge
+    ipam:
+      config:
+          - subnet: 10.10.10.0/28
